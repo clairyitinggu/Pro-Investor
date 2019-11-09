@@ -8,6 +8,7 @@ form {
 }
 
 /* Full-width inputs */
+input[type="email"],
 input[type="text"],
 input[type="password"] {
   width: 100%;
