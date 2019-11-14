@@ -9,8 +9,9 @@ const app = express()
 app.use(express.static(path.join(__dirname, '../../public')));
 app.set('view engine', 'ejs')
 
+//display login page
 app.get('/', function (request, response) {
-  response.render('login_page', {response: ""})
+  response.render('login_page', {response: "", account_created: ""})
 })
 
 app.listen(3000, function () {
@@ -37,7 +38,7 @@ connection.connect(function(err) {
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
-app.post('/auth', function(request, response) {
+app.post('/login', function(request, response) {
 	var username = request.body.username;
   var password = request.body.password;
   
@@ -46,6 +47,32 @@ app.post('/auth', function(request, response) {
     if (results.length > 0) 
       response.send('Logged In!');
     else 
-      response.render('login_page', {response: "Invalid Username/Password"});
+      response.render('login_page', {response: "Invalid Username/Password", account_created: ""});
   });
+});
+
+
+//display sign up page
+app.get('/display_signup', (request, response) => {
+  response.render('signup', {unique_email: ""});
+ });
+
+ app.post('/signup', function(request, response) {
+  var username = request.body.username;
+  var email = request.body.email;
+  var password = request.body.password;
+  var confirm_password = request.body.confirm_password;
+
+  
+  //sql queries
+  var unique_email = 'SELECT userEmail FROM user_login WHERE userEmail = ?'
+
+  connection.query(unique_email, [email], function(error, results) {
+    if (results.length > 0) 
+      response.render('signup', {unique_email: "Account already exists with this email"});
+    else 
+      connection.query('INSERT INTO user_login (userEmail, userPassword) VALUES ("'+email+'", "'+password+'")');
+      response.render('login_page', {response: "", account_created: "New Account Created! You May Now Sign In"});
+  });
+
 });

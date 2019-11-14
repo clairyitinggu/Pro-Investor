@@ -3,31 +3,48 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Pro-Investor</title>
+    <title>Sign Up</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../stylesheet/stylesheet.css" />
   </head>
   <body>
-    <form action="/login" method="post">
+    <form action="/signup" method="post">
       <div class="imgcontainer">
         <img src="img_avatar2.png" alt="Avatar" class="avatar" />
       </div>
+
       <div class="container">
-        <p><%= account_created%></p>
-        <label for="username"><b>Username/Email</b></label>
+        <label for="username"><b>Create Username</b></label>
         <input
           type="text"
-          placeholder="Enter Username/Email"
+          placeholder="Enter Username"
           name="username"
           required
         />
 
-        <label for="password"><b>Password</b></label>
+        <label for="email"><b>Email</b></label>
+        <input
+          type="email"
+          placeholder="Enter Email"
+          name="email"
+          required
+        />
+        <p><%= unique_email%></p>
+
+        <label for="password"><b>Create password</b></label>
         <input
           type="password"
           placeholder="Enter Password"
           name="password"
+          required
+        />
+
+        <label for="confirm_password"><b>Confirm password</b></label>
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          name="confirm_password"
           required
         />
 
@@ -36,10 +53,6 @@
           <input type="checkbox" checked="checked" name="remember" /> Remember
           me
         </label> -->
-        <p><%= response %></p>
-      </div>
-      <div class="container" style="background-color:#f1f1f1">
-        <span class="signup">Don't Have An Account?  <a href="/display_signup">Create One</a></span>
       </div>
     </form>
 
