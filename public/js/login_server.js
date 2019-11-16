@@ -43,7 +43,7 @@ app.post('/login', function(request, response) {
   var password = request.body.password;
   
   //sql query
-  connection.query('SELECT userEmail, userPassword FROM user_login WHERE userEmail = ? AND userPassword = ?', [username, password], function(error, results) {
+  connection.query('SELECT userEmail, userPassword FROM user_login WHERE userEmail = "'+username+'" AND userPassword = SHA1("'+password+'")', function(error, results) {
     if (results.length > 0) 
       response.send('Logged In!');
     else 
@@ -62,17 +62,20 @@ app.get('/display_signup', (request, response) => {
   var email = request.body.email;
   var password = request.body.password;
   var confirm_password = request.body.confirm_password;
+     if (confirm_password == password) {
 
-  
-  //sql queries
-  var unique_email = 'SELECT userEmail FROM user_login WHERE userEmail = ?'
+         //sql queries
+         var unique_email = 'SELECT userEmail FROM user_login WHERE userEmail = ?'
 
-  connection.query(unique_email, [email], function(error, results) {
-    if (results.length > 0) 
-      response.render('signup', {unique_email: "Account already exists with this email"});
-    else 
-      connection.query('INSERT INTO user_login (userEmail, userPassword) VALUES ("'+email+'", "'+password+'")');
-      response.render('login_page', {response: "", account_created: "New Account Created! You May Now Sign In"});
-  });
+         connection.query(unique_email, [email], function (error, results) {
+             if (results.length > 0)
+                 response.render('signup', { unique_email: "Account already exists with this email" });
+             else
+                 connection.query('INSERT INTO user_login (userEmail, userPassword, created_at) VALUES ("' + email + '", SHA1("' + password + '"), NOW())');
+             response.render('login_page', { response: "", account_created: "New Account Created! You May Now Sign In" });
+         });
+     } else {
+         // todo, alert user password confirm_password doesn't match
+     }
 
 });
