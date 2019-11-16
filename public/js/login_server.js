@@ -57,11 +57,11 @@ app.get('/display_login', (request, response) => {
  });
 
 //display sign up page
-app.get('/display_signup', (request, response) => {
-  response.render('signup', {unique_email: ""});
- });
+app.get("/display_main_page", (request, response) => {
+  response.render("main_page", { unique_email: "" });
+});
 
- app.post('/signup', function(request, response) {
+app.post("/signup", function(request, response) {
   var email = request.body.email;
   var password = request.body.password;
   var confirm_password = request.body.confirm_password;
@@ -72,7 +72,7 @@ app.get('/display_signup', (request, response) => {
 
   connection.query(unique_email, [email], function(error, results) {
     if (results.length > 0) 
-      response.render('signup', {unique_email: "Account already exists with this email"});
+      response.render('main_page', {unique_email: "Account already exists with this email"});
     else 
       connection.query('INSERT INTO user_login (userEmail, userPassword) VALUES ("'+email+'", "'+password+'")');
       response.render('login_page', {response: "", account_created: "New Account Created! You May Now Sign In"});
