@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Pro-Investor</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../stylesheet/home.css" />
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <div class = "main_container">
+      <form id = "search_stock">
+          <textarea id="myTextArea"></textarea>
+          <input type="submit">
+      </form>
+      <button id = "deletion" type="button">delete!</button>
+      <table id = "table" class = "table">   
+          <tr>
+              <th>Investments</th>
+          </tr>
+          <tr>
+              <th>Name</th>
+              <th>Open</th>
+              <th>High</th>
+              <th>Low</th>
+              <th>Price</th>
+              <th>Volume</th>
+          </tr>
+          <script>
+            var socket = io.connect('http://localhost:3000');
+
+            //initialize list of investments on start up
+            socket.on('initialize', (list) => {
+              for (var i = 0; i < list.length; i++){
+                var row = table.insertRow(-1)
+
+                counter = 0
+                parameters = ['01. symbol', '02. open', '03. high', '04. low', '05. price', '06. volume']
+
+                for (p of parameters){
+                  var cell = row.insertCell(counter)
+                  cell.innerHTML = list[i]['Global Quote'][p]
+                  counter++
+                }
+
+                button = document.createElement('button');
+                button.innerHTML = "delete"
+                button.className = "delete_row"
+                button.style.display = "none"
+                row.appendChild(button)
+              }
+            })
+
+            //listen for clicks to row buttons for deletion
+            document.addEventListener('click', function (event) {
+	            if (event.target.className == "delete_row"){
+                var tb = event.target.parentNode.parentNode
+                tb.removeChild(event.target.parentNode)
+              }
+            }, false);
+
+
+            //toggle delete button in table
+            deletion.addEventListener("click", function() {
+              var buttons = document.getElementById("table").querySelectorAll("button")
+              if(deletion.innerHTML == "delete!"){
+                for (button of buttons)
+                  button.style.display = "block"
+                deletion.innerHTML = "cancel"
+              }
+
+              else{
+                for (button of buttons)
+                  button.style.display = "none"
+                deletion.innerHTML = "delete!"
+              }
+            })
+          </script>
+      </table>
+    </div>
+  </body>
+</html>
