@@ -91,8 +91,7 @@
             <li class="nav-item">
               <a
                 class="nav-link"
-                href="https://mdbootstrap.com/docs/jquery/"
-                target="_blank"
+                href="#isection"
                 >About Pro-Investor</a
               >
             </li>
@@ -113,7 +112,7 @@
           <ul class="navbar-nav nav-flex-icons">
               <li class="nav-item">
                 <a
-                  href="/login"
+                  href="/display_login"
                   class="nav-link border border-light rounded"
                   target="_blank"
                 >
@@ -154,13 +153,11 @@
 
               <p class="mb-4 d-none d-md-block">
                 <strong
-                  >The most comprehensive tutorial for the Bootstrap 4. Loved by
-                  over 500 000 users. Video and written versions available.
-                  Create your own, stunning website.</strong
+                  ></strong
                 >
               </p>
 
-              <a target="_blank" href="#" class="btn btn-indigo btn-lg"
+              <a href="#tsection" class="btn btn-indigo btn-lg"
                 >Pro-Investor tutorial
                 <i class="fas fa-graduation-cap ml-2"></i>
               </a>
@@ -174,32 +171,32 @@
                 <!--Card content-->
                 <div class="card-body">
                   <!-- Form -->
-                  <form name="">
+                  <form action="/signup" method="post">
                     <!-- Heading -->
                     <h3 class="dark-grey-text text-center">
-                        <p><%= account_created%></p>
+                        
                       <strong>Sign Up</strong>
                     </h3>
                     <hr />
 
                     <div class="md-form">
                       <i class="fas fa-user prefix grey-text"></i>
-                      <input type="text" id="form3" class="form-control" />
-                      <label for="form3">Email/username</label>
+                      <input type="email" id="form3" class="form-control" name="email" required/>
+                      <label for="email">Email/username</label>
                     </div>
                     <div class="md-form">
                       <i class="fas fa-unlock prefix grey-text"></i>
-                      <input type="text" id="form2" class="form-control" />
-                      <label for="form2">Password</label>
+                      <input type="password" id="form2" class="form-control"  name="password" required/>
+                      <label for="password">Password</label>
                     </div>
                     <div class="md-form">
                       <i class="fas fa-lock prefix grey-text"></i>
-                      <input type="text" id="form2" class="form-control" />
-                      <label for="form2">Confirm Password</label>
+                      <input type="password" id="form2" class="form-control" name="confirm_password" required/>
+                      <label for="confirm_password">Confirm Password</label>
                     </div>
 
                     <div class="text-center">
-                      <button class="btn btn-indigo">Register</button>
+                      <button type="submit" class="btn btn-indigo">Register</button>
                       <hr />
                       <div>Already have an account?<a href="#"> Login</a></div>
                     </div>
@@ -226,7 +223,7 @@
 
         <!--Section: Main features & Quick Start-->
         <br />
-        <section>
+        <section id = "isection">
           <h3 class="h3 text-center mb-5">About Pro-Investor</h3>
 
           <!--Grid row-->
@@ -283,7 +280,7 @@
         <hr class="my-5" />
 
         <!--Section: Not enough-->
-        <section>
+        <section id = "tsection">
           <div>
             <h2 class="my-5 h3 text-center">Tutorial</h2>
           </div>
