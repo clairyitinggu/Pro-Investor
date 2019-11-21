@@ -45,7 +45,7 @@ app.post('/login', function(request, response) {
   //sql query
   connection.query('SELECT userEmail, userPassword FROM user_login WHERE userEmail = "' + username + '" AND userPassword = SHA1("' + password + '")', function (error, results) {
     if (results.length > 0) 
-      response.send('Logged In!');
+        response.render("home");
     else 
       response.render('login_page', {response: "Invalid Username/Password", account_created: ""});
   });
