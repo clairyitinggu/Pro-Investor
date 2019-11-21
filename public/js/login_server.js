@@ -65,17 +65,19 @@ app.post("/signup", function(request, response) {
   var email = request.body.email;
   var password = request.body.password;
   var confirm_password = request.body.confirm_password;
+    if (password != confirm_password) {
+        response.render('main_page', { response: "password and confirm password does not match up!" });
+    } else {
 
-  
-  //sql queries
-  var unique_email = 'SELECT userEmail FROM user_login WHERE userEmail = ?'
+        //sql queries
+        var unique_email = 'SELECT userEmail FROM user_login WHERE userEmail = ?'
 
-  connection.query(unique_email, [email], function(error, results) {
-    if (results.length > 0) 
-      response.render('main_page', {unique_email: "Account already exists with this email"});
-    else 
-        connection.query('INSERT INTO user_login (userEmail, userPassword, created_at) VALUES ("' + email + '", SHA1("' + password + '"), NOW())');
-    response.render('login_page', {response: "", account_created: "New Account Created! You May Now Sign In"});
-  });
-
+        connection.query(unique_email, [email], function (error, results) {
+            if (results.length > 0)
+                response.render('main_page', { response: "Account already existed!"});
+            else
+                connection.query('INSERT INTO user_login (userEmail, userPassword, created_at) VALUES ("' + email + '", SHA1("' + password + '"), NOW())');
+            response.render('login_page', { response: ""});
+        });
+    }
 });
