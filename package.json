@@ -4,11 +4,13 @@
   "description": "[yitingGu](https://github.com/clairyitinggu/Pro-Investor/blob/master/team/clairyitinggu.md)\r [MadelineFuentes](https://github.com/clairyitinggu/Pro-Investor/blob/master/team/MadelineFuentes.md)\r [SiqianZhou](https://github.com/clairyitinggu/Pro-Investor/blob/master/team/siqingzhou.md)",
   "main": "public/js/login_server.js",
   "dependencies": {
+    "alphavantage": "^1.2.6",
     "ejs": "^2.7.2",
     "express": "^4.17.1",
     "mysql": "^2.17.1",
     "nodemailer": "^6.3.1",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "socket.io": "^2.3.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
