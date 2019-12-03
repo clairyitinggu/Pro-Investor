@@ -3,7 +3,9 @@ const express = require('express')
 var path = require("path");
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
-
+const alpha = require('alphavantage')({ key: 'M9XXXH6V2NGIA32C' });
+var io = require('socket.io')
+const fetch = require("node-fetch"); //npm i node-fetch --save
 const app = express()
 
 app.use(express.static(path.join(__dirname, '../../public')));
@@ -14,7 +16,7 @@ app.get('/', function (request, response) {
   response.render('main_page', {response: "", account_created: ""})
 })
 
-app.listen(3000, function () {
+server = app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
 
@@ -39,14 +41,25 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
 app.post('/login', function(request, response) {
-	var username = request.body.username;
+  var username = request.body.username;
   var password = request.body.password;
   
   //sql query
   connection.query('SELECT userEmail, userPassword FROM user_login WHERE userEmail = "' + username + '" AND userPassword = SHA1("' + password + '")', function (error, results) {
-    if (results.length > 0) 
-        response.render("home");
-    else 
+  if (results.length > 0) {
+      var listener = io.listen(server);
+
+      list = []
+      stocks = ['msft', 'amzn']
+
+      getApiData(list, stocks).then(data => console.log(data));
+      console.log(list);
+      response.render("home");
+      listener.on('connection', function (socket) {
+          socket.emit('initialize', list); // Emit on the opened socket.
+      });
+   }
+   else 
       response.render('login_page', {response: "Invalid Username/Password", account_created: ""});
   });
 });
@@ -81,3 +94,19 @@ app.post("/signup", function(request, response) {
         });
     }
 });
+
+async function getApiData(list, symbols) {
+    const otherPram = {
+        headers: {
+            "content-type": "application/json; charset=UTF-8"
+        },
+        method: "GET"
+    };
+    for (itr of symbols) {
+        url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&apikey=M9XXXH6V2NGIA32C&symbol=" + itr;
+        response = await fetch(url, otherPram);
+        data = await response.json();
+        await list.push(data);
+    }
+    return list;
+}
