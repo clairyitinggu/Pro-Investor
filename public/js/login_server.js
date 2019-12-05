@@ -1,5 +1,5 @@
 //start server and render html page
-const express = require('express')
+const express = require('express');
 var path = require("path");
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
@@ -7,6 +7,9 @@ const alpha = require('alphavantage')({ key: 'M9XXXH6V2NGIA32C' });
 var io = require('socket.io')
 const fetch = require("node-fetch"); //npm i node-fetch --save
 const app = express()
+
+const myAPI = require('./api');
+const myDB = require('./db_functions');
 
 app.use(express.static(path.join(__dirname, '../../public')));
 app.set('view engine', 'ejs')
@@ -19,8 +22,6 @@ app.get('/', function (request, response) {
 server = app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
-
-
 //connect to MySQL database
 var connection = mysql.createConnection({
   host: "remotemysql.com",
@@ -35,7 +36,6 @@ connection.connect(function(err) {
   console.log("Connected!");
 });
 
-
 //handle login details sent through form (when user clicks submit)
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
@@ -43,21 +43,42 @@ app.use(bodyParser.json());
 app.post('/login', function(request, response) {
   var username = request.body.username;
   var password = request.body.password;
-  
-  //sql query
+    //query check username and password match database record
   connection.query('SELECT userEmail, userPassword FROM user_login WHERE userEmail = "' + username + '" AND userPassword = SHA1("' + password + '")', function (error, results) {
-  if (results.length > 0) {
-      list = []
+      if (results.length > 0) { // matched
+          connection.query('select InvestmentName from userInvestment where userEmail = "' + username + '"', function (error, result) {
+              if (error) throw error;
+              if (result.length > 0) {
+                  var resultArray = Object.values(JSON.parse(JSON.stringify(result)));
+                  list = [];
+                  stocks = [];
+                  resultArray.forEach(function (v) { console.log(v) });
+                  for (itr in resultArray) {
+                      stocks.push(resultArray[itr].InvestmentName);
+                  }
+                  console.log("user has investment, " + stocks);
+                  myAPI.getApiData(list, stocks).then(data => {
+                      console.log(data);
+                      var listener = io.listen(server);
+                      response.render("home");
+                      listener.on('connection', function (socket) {
+                          socket.emit('initialize', list); // Emit on the opened socket.
+                      });
+                  });
+              }
+
+          });  
+
+      /*list = []
       stocks = ['msft', 'amzn']
 
-      getApiData(list, stocks).then(data => {
-          console.log(data);
+      myAPI.getApiData(list, stocks).then(data => {
           var listener = io.listen(server);
           response.render("home");
           listener.on('connection', function (socket) {
               socket.emit('initialize', list); // Emit on the opened socket.
           });
-      });
+      });*/
    }
    else 
       response.render('login_page', {response: "Invalid Username/Password", account_created: ""});
@@ -94,21 +115,3 @@ app.post("/signup", function(request, response) {
         });
     }
 });
-
-async function getApiData(list, symbols) {
-    const otherPram = {
-        headers: {
-            "content-type": "application/json; charset=UTF-8"
-        },
-        method: "GET"
-    };
-    for (itr of symbols) {
-        url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&apikey=" + alpha.key+"&symbol=" + itr;
-        response = await fetch(url, otherPram);
-        data = await response.json();
-        await list.push(data);
-        console.log("inside forloop");
-    }
-    console.log("list returned");
-    return list;
-}
