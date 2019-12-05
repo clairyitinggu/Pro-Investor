@@ -47,16 +47,16 @@ app.post('/login', function(request, response) {
   //sql query
   connection.query('SELECT userEmail, userPassword FROM user_login WHERE userEmail = "' + username + '" AND userPassword = SHA1("' + password + '")', function (error, results) {
   if (results.length > 0) {
-      var listener = io.listen(server);
-
       list = []
       stocks = ['msft', 'amzn']
 
-      getApiData(list, stocks).then(data => console.log(data));
-      console.log(list);
-      response.render("home");
-      listener.on('connection', function (socket) {
-          socket.emit('initialize', list); // Emit on the opened socket.
+      getApiData(list, stocks).then(data => {
+          console.log(data);
+          var listener = io.listen(server);
+          response.render("home");
+          listener.on('connection', function (socket) {
+              socket.emit('initialize', list); // Emit on the opened socket.
+          });
       });
    }
    else 
@@ -103,10 +103,12 @@ async function getApiData(list, symbols) {
         method: "GET"
     };
     for (itr of symbols) {
-        url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&apikey=M9XXXH6V2NGIA32C&symbol=" + itr;
+        url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&apikey=" + alpha.key+"&symbol=" + itr;
         response = await fetch(url, otherPram);
         data = await response.json();
         await list.push(data);
+        console.log("inside forloop");
     }
+    console.log("list returned");
     return list;
 }
