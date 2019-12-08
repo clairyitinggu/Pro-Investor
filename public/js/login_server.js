@@ -60,9 +60,18 @@ app.post('/login', function(request, response) {
                   myAPI.getApiData(list, stocks).then(data => {
                       console.log(data);
                       var listener = io.listen(server);
-                      response.render("home");
+                      response.render("home", { response: username });
                       listener.on('connection', function (socket) {
                           socket.emit('initialize', list); // Emit on the opened socket.
+                      });
+                      listener.on('connection', function (socket) {
+                          console.log("on connection");
+                          socket.on('message', function (msg) {
+                              console.log("server got meesage:" + msg);
+                              connection.query(msg, function (error, result) {
+                                  console.log("data deleted from db");
+                              });
+                          });
                       });
                   });
               }

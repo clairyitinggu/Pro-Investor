@@ -11,6 +11,7 @@
   </head>
   <body>
     <div class = "main_container">
+		<h3 class="loginHeader">Logged In As: <span class="login"><%= response %></span></h3>
       <form id = "search_stock">
           <textarea id="myTextArea"></textarea>
           <input type="submit">
@@ -25,9 +26,13 @@
               <th>Open</th>
               <th>High</th>
               <th>Low</th>
-              <th>Price</th>
+              <th>Current Close</th>
               <th>Volume</th>
+			  <th>Date</th>
+			  <th>Previous Close</th>
+			  <th>% Change</th>
           </tr>
+		  <script type="text/javascript" src="./public/js/db_functions.js"></script>
           <script>
             var socket = io.connect('http://localhost:3000');
 
@@ -37,30 +42,42 @@
                 var row = table.insertRow(-1)
 
                 counter = 0
-                parameters = ['01. symbol', '02. open', '03. high', '04. low', '05. price', '06. volume']
+                parameters = ['01. symbol', '02. open', '03. high', '04. low', '05. price', '06. volume', '07. latest trading day', '08. previous close', '10. change percent']
 
                 for (p of parameters){
                   var cell = row.insertCell(counter)
+				  cell.className = "stockData"+i;
                   cell.innerHTML = list[i]['Global Quote'][p]
                   counter++
                 }
 
                 button = document.createElement('button');
                 button.innerHTML = "delete"
-                button.className = "delete_row"
+                button.className = "delete_row"+i;
                 button.style.display = "none"
                 row.appendChild(button)
               }
             })
-
+			var query;
             //listen for clicks to row buttons for deletion
             document.addEventListener('click', function (event) {
-	            if (event.target.className == "delete_row"){
-                var tb = event.target.parentNode.parentNode
-                tb.removeChild(event.target.parentNode)
+	            if (event.target.className.includes("delete_row")){
+					var name = event.target.className;
+					var row = name.charAt(name.length-1);
+					var target = document.getElementsByClassName("stockData"+row);
+					var temp = document.getElementsByClassName("login");
+					var userName = temp[0].innerHTML;
+					var investmentName = target[0].innerHTML;
+					query = 'delete from userInvestment where userEmail = "'+userName+'" and InvestmentName = "'+investmentName+'"';
+					alert(investmentName+userName);
+					var tb = event.target.parentNode.parentNode
+					tb.removeChild(event.target.parentNode);
+					var temp = io('http://localhost:3000/');
+					  temp.on('connect', function () {
+						temp.send(query);
+					 });
               }
             }, false);
-
 
             //toggle delete button in table
             deletion.addEventListener("click", function() {
