@@ -42,7 +42,8 @@ app.use(bodyParser.json());
 
 app.post('/login', function(request, response) {
   var username = request.body.username;
-  var password = request.body.password;
+    var password = request.body.password;
+    var listener = io.listen(server);
     //query check username and password match database record
   connection.query('SELECT userEmail, userPassword FROM user_login WHERE userEmail = "' + username + '" AND userPassword = SHA1("' + password + '")', function (error, results) {
       if (results.length > 0) { // matched
@@ -59,13 +60,11 @@ app.post('/login', function(request, response) {
                   console.log("user has investment, " + stocks);
                   myAPI.getApiData(list, stocks).then(data => {
                       console.log(data);
-                      var listener = io.listen(server);
                       response.render("home", { response: username });
                       listener.on('connection', function (socket) {
                           socket.emit('initialize', list); // Emit on the opened socket.
                       });
                       listener.on('connection', function (socket) {
-                          console.log("on connection");
                           socket.on('message', function (msg) {
                               console.log("server got meesage:" + msg);
                               connection.query(msg, function (error, result) {
@@ -73,6 +72,11 @@ app.post('/login', function(request, response) {
                               });
                           });
                       });
+                  });
+              } else {
+                  response.render("home", { response: username });
+                  listener.on('connection', function (socket) {
+                      socket.emit('initialize', []); // Emit on the opened socket.
                   });
               }
 
