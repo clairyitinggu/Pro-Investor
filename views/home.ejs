@@ -3,24 +3,95 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>Pro-Investor</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../stylesheet/home.css" />
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+    <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
+  />
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/stylesheet/css/bootstrap.min.css" />
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="/stylesheet/css/mdb.min.css" />
+
+    <link rel="stylesheet" href="/stylesheet/home.css" />
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
+    
     <div class = "main_container">
-		<h3 class="loginHeader">Logged In As: <span class="login"><%= response %></span></h3>
-      <form id = "search_stock">
-          <textarea id="myTextArea"></textarea>
-          <input type="submit">
+    <p class="loginHeader">Logged In As: <span class="login"><%= response %></span></p>
+    <div class="card">
+        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+           Investment List
+          </h3>
+        <div class="card-body">
+            <div id="table-editable" class="table-editable">
+                <span class="table-add float-left mb-3 mr-2">
+            <!-- here is the search bar -->
+      <form id = "search_stock" class="form-inline">
+          <div class="md-form">
+              <input
+                type="search"
+                id="form-autocomplete"
+                class="form-control mdb-autocomplete"
+              />
+
+              <button class="mdb-autocomplete-clear">
+                <svg
+                  fill="#000000"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="https://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                  <path d="M0 0h24v24H0z" fill="none" />
+                </svg>
+              </button>
+
+              <label for="form-autocomplete" class="active"
+                >Search the symbol</label>
+            </div>
+          <!-- <textarea id="myTextArea"></textarea>
+          <input type="submit"> -->
       </form>
-      <button id = "deletion" type="button">delete!</button>
+                </span>
+      <!-- here is the add button -->
+      <span class="table-add float-left mb-3 mr-2">
+        <form class="form-inline">
+              <div class="md-form">
+                <a href="#!" class="text-success"
+                  ><i class="fas fa-plus fa-2x" aria-hidden="true"></i>
+              </a>
+              </div>
+              </form>
+        </span>
+
+      <!-- here is the delete button -->
+      <span class="table-add float-left mb-3 mr-2">
+          <form class="form-inline">
+                <div class="md-form">
+                  <a href="#!" class="text-danger"
+                    ><i class="fas fa-minus fa-2x" aria-hidden="true"></i>
+                </a>
+                </div>
+                </form>
+          </span>
+          <!-- <button id = "deletion" type="button">delete!</button> -->
+      </span>
+
+      <!--  -->
       <table id = "table" class = "table">   
-          <tr>
-              <th>Investments</th>
-          </tr>
           <tr>
               <th>Name</th>
               <th>Open</th>
@@ -32,6 +103,10 @@
 			  <th>Previous Close</th>
 			  <th>% Change</th>
           </tr>
+        </div>
+          </div>
+</div>
+
 		  <script type="text/javascript" src="./public/js/db_functions.js"></script>
           <script>
             var socket = io.connect('http://localhost:3000');
@@ -39,8 +114,7 @@
             //initialize list of investments on start up
             socket.on('initialize', (list) => {
               for (var i = 0; i < list.length; i++){
-                var row = table.insertRow(-1)
-
+                var row = table.insertRow(-1);
                 counter = 0
                 parameters = ['01. symbol', '02. open', '03. high', '04. low', '05. price', '06. volume', '07. latest trading day', '08. previous close', '10. change percent']
 
@@ -57,29 +131,40 @@
                 button.style.display = "none"
                 row.appendChild(button)
               }
-            })
+            });
 			var query;
             //listen for clicks to row buttons for deletion
             document.addEventListener('click', function (event) {
+				var temp = io('http://localhost:3000/');
+				var login = document.getElementsByClassName("login");
+				var userName = login[0].innerHTML;
 	            if (event.target.className.includes("delete_row")){
 					var name = event.target.className;
 					var row = name.charAt(name.length-1);
 					var target = document.getElementsByClassName("stockData"+row);
-					var temp = document.getElementsByClassName("login");
-					var userName = temp[0].innerHTML;
 					var investmentName = target[0].innerHTML;
 					query = 'delete from userInvestment where userEmail = "'+userName+'" and InvestmentName = "'+investmentName+'"';
-					alert(investmentName+userName);
 					var tb = event.target.parentNode.parentNode
 					tb.removeChild(event.target.parentNode);
-					var temp = io('http://localhost:3000/');
 					  temp.on('connect', function () {
 						temp.send(query);
 					 });
-              }
+              }else if(event.target.className.includes("fas fa-plus fa-2x")){
+					var inputBar = document.getElementsByClassName("form-control mdb-autocomplete");
+					var stockToBeAdded = inputBar[0].value;
+					//first, try to to find if the stock already existed in db
+					var query = 'select * from userInvestment where userEmail = "'+userName+'" and InvestmentName = "'+stockToBeAdded+'"';
+					  temp.on('connect', function () {
+						temp.send(query);
+					 });
+					 temp.on('message',function(msg){
+						window.location.reload();
+					 });
+			  }
             }, false);
 
             //toggle delete button in table
+			var deletion = document.getElementsByClassName("fas fa-minus fa-2x")[0];
             deletion.addEventListener("click", function() {
               var buttons = document.getElementById("table").querySelectorAll("button")
               if(deletion.innerHTML == "delete!"){
@@ -97,5 +182,29 @@
           </script>
       </table>
     </div>
+
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="/js/mdb.min.js"></script>
+    <!-- here is the live search jquery  -->
+    <script type="text/javascript">
+      $.getJSON("/json/name.json", function(data) {
+        var items = [];
+        $.each(data, function(index, value) {
+          $.each(data[index], function(key, value) {
+            items.push(value);
+          });
+        });
+        $("#form-autocomplete").mdbAutocomplete({
+          data: items
+        });
+      });
+    </script>
+    
   </body>
 </html>
+
