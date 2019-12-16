@@ -7,20 +7,30 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../stylesheet/stylesheet.css" />
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet" />
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
   </head>
   <body>
-    
-    <table>   
-        <tr>
-            <th>HomeTeam</th>
-        </tr>
-        <% for (var i = 0; i < result.length; i++) { %>
-            <tr>
-                <td><%= result[i] %> </td>
-            </tr>
-    
-        <% }; %>
+    <table>
+      <tr>
+        <th>HomeTeam</th>
+      </tr>
+      <% for (var i = 0; i < result.length; i++) { %>
+      <tr>
+        <td><%= result[i] %></td>
+      </tr>
+
+      <% }; %>
     </table>
+
+    <!-- editable table -->
+
     <script src="" async defer></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
   </body>
 </html>

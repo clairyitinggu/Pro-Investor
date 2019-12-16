@@ -15,3 +15,6 @@ Our project is focused on the investment tracking, and users can put their inves
 Helping users to manage their finance and also increase their financial literacy.
 
 # 2 topic requirements your team is choosing.
+# pro_investor_final
+# pro_investor_final
+# pro_investor_final

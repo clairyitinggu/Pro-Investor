@@ -2,46 +2,125 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Pro-Investor</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../stylesheet/stylesheet.css" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Login Page</title>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+       href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous"/>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="../stylesheet/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Material Design Bootstrap -->
+    <link href="../stylesheet/css/mdb.min.css" rel="stylesheet" />
+    <!-- Your custom styles (optional) -->
+    <link href="../stylesheet/css/style.min.css" rel="stylesheet" />
+    <style type="text/css">
+      html,
+      body,
+      header,
+      .view {
+        height: 100%;
+      }
+      @media (max-width: 740px) {
+        html,
+        body,
+        header,
+        .view {
+          height: 1000px;
+        }
+      }
+      @media (min-width: 800px) and (max-width: 850px) {
+        html,
+        body,
+        header,
+        .view {
+          height: 650px;
+        }
+      }
+      @media (min-width: 800px) and (max-width: 850px) {
+        .navbar:not(.top-nav-collapse) {
+          background: #1c2331 !important;
+        }
+      }
+    </style>
+  </head>
   </head>
   <body>
-    <form action="/login" method="post">
-      <div class="imgcontainer">
-        <img src="/img/logo.png" alt="Avatar" width="195" height="85" />
-      </div>
-      <div class="container">
-        <label for="username"><b>Username/Email</b></label>
-        <input
-          type="text"
-          placeholder="Enter Username/Email"
-          name="username"
-          required
-        />
+      <div
+      class="view full-page-intro"
+      style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/78.jpg'); background-repeat: no-repeat; background-size: cover;"
+    >
+    <center>
+      <div class="col-md-6 col-xl-5 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <form action="/login" method="post">
+              <!-- <div class="imgcontainer">
+        <img src="img_avatar2.png" alt="Avatar" class="avatar" />
+      </div> -->
+              <h3 class="dark-grey-text text-center">
+                <strong>LOGIN</strong>
+              </h3>
 
-        <label for="password"><b>Password</b></label>
-        <input
-          type="password"
-          placeholder="Enter Password"
-          name="password"
-          required
-        />
-        <button type="submit">Login</button>
-        <!-- <label>
-          <input type="checkbox" checked="checked" name="remember" /> Remember
-          me
-        </label> -->
-      </div>
-      <div class="container" style="background-color:#f1f1f1">
-        <span class="signup"
-          >Don't Have An Account? <a href="/display_signup">Create One</a></span
-        >
-      </div>
-    </form>
+              <div class="md-form" style="text-align: left">
+                <i class="fas fa-user prefix grey-text"></i>
+                <input
+                  type="text"
+                  id="form3"
+                  class="form-control"
+                  name="username"
+                />
+                <!-- <input type="email" id="form3" class="form-control" name="email" required/> -->
+                <label for="username" class="active"><b>Username/Email</b></label>
+              </div>
 
+              <!-- <input
+                type="text"
+                placeholder="Enter Username/Email"
+                name="username"
+                required
+              /> -->
+
+              <!-- password -->
+              <div class="md-form" style="text-align: left">
+                <i class="fas fa-unlock prefix grey-text"></i>
+
+                <input
+                  type="password"
+                  id="form2"
+                  class="form-control"
+                  
+                  name="password"
+                  required
+                />
+                <label for="password" class="active">Password</label>
+              </div>
+
+              <!-- login -->
+              <div style="text-align: center">
+                <button type="submit" class="btn btn-indigo">Login</button>
+              </div>
+              <div class="container" style="text-align: right;">
+                <span class="signup"
+                  >
+                  <div class="text-center">
+                  Don't Have An Account?
+                  <a href="/display_main_page">Create One</a>
+                  </div>
+                  </span
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </center>
+      </div>
     <script src="" async defer></script>
   </body>
 </html>
