@@ -26,7 +26,6 @@
       .view {
         height: 100%;
       }
-
       @media (max-width: 740px) {
         html,
         body,
@@ -35,7 +34,6 @@
           height: 1000px;
         }
       }
-
       @media (min-width: 800px) and (max-width: 850px) {
         html,
         body,
@@ -128,7 +126,7 @@
     <!-- Full Page Intro -->
     <div
       class="view full-page-intro"
-      style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2202&q=80'); background-repeat: no-repeat; background-size: cover;"
+      style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1902&q=80'); background-repeat: no-repeat; background-size: cover;"
     >
       <!-- Mask & flexbox options-->
       <div
@@ -170,7 +168,7 @@
                 <!--Card content-->
                 <div class="card-body">
                   <!-- Form -->
-                  <form action="/signup" method="post">
+                  <form id = "zzz" method="post" action = "/signup" >
                     <!-- Heading -->
                     <h3 class="dark-grey-text text-center">
                         
@@ -180,26 +178,36 @@
 
                     <div class="md-form">
                       <i class="fas fa-user prefix grey-text"></i>
-                      <input type="email" id="form3" class="form-control" name="email" required/>
-                      <label for="email">Email/username</label>
+                      <input type="email" id="form4" class="form-control" name="email" required/>
+                      <label for="email" class="active">Email/username</label>
+                      <div class="text-center">
+                      <button type='submit' id="btr" class="btn btn-indigo text-center">Send Vcode</button>
+                      </div>
                     </div>
+
+                    <div class="md-form">
+                      <i class="fas fa-keyboard prefix grey-text"></i>
+                      <input type="password" id="form3" class="form-control" name="code" required/>
+                      <label for="code" class="active">Please enter you Vcode</label>
+                   </div>
+                   
                     <div class="md-form">
                       <i class="fas fa-unlock prefix grey-text"></i>
                       <input type="password" id="form2" class="form-control"  name="password" required/>
-                      <label for="password">Password</label>
+                      <label for="password" class="active" >Password</label>
                     </div>
                     <div class="md-form">
                       <i class="fas fa-lock prefix grey-text"></i>
-                      <input type="password" id="form2" class="form-control" name="confirm_password" required/>
-                      <label for="confirm_password">Confirm Password</label>
+                      <input type="password" id="form1" class="form-control" name="confirm_password" required/>
+                      <label for="confirm_password" class="active">Confirm Password</label>
                     </div>
 
                     <div class="text-center">
 					   
-                      <button type="submit" class="btn btn-indigo">Register</button>
+                      <button type="submit" id = "btr1" class="btn btn-indigo">Register</button>
                       <hr />
-					  <p><%= response %></p>
-                      <div>Already have an account?<a href="#"> Login</a></div>
+                      <p><%= response %></p>
+                      <div>Already have an account?<a href="/display_login"> Login</a></div>
                     </div>
                   </form>
                   <!-- Form -->
@@ -227,6 +235,16 @@
         <section id = "isection">
           <h3 class="h3 text-center mb-5">About Pro-Investor</h3>
 
+
+<!-- HTML,CSS,Javascript
+
+
+
+
+
+
+ -->
+
           <!--Grid row-->
           <div class="row wow fadeIn">
             <!--Grid column-->
@@ -237,10 +255,20 @@
                   <i class="fas fa-lightbulb fa-2x indigo-text"></i>
                 </div>
                 <div class="col-10">
-                  <h5 class="feature-title">put fullfill requirement</h5>
-                  <p class="grey-text">
-                    #
-                  </p>
+                    <h3 >
+                        The technology we used
+                    </h3>
+                    
+                  <h4 class="feature-title">HTML,CSS,Javascript</h5>
+                  <h4 class="feature-title">MySQL</h4>
+                  <h4 class="feature-title">Node.js</h4>
+                  <h4 class="feature-title">MDBootstrap</h4>
+                  <h4 class="feature-title">Ajax</h4>
+                  <h4 class="feature-title">Websockets</h4>
+                  <h4 class="feature-title">Authentication</h4>
+                  <h4 class="feature-title">Password Hashing</h4>
+
+                  
                 </div>
               </div>
               <!--/First row-->
@@ -262,7 +290,7 @@
             <!--Grid column-->
             <div class="col-lg-6 col-md-12">
               <p class="h5 text-center mb-4">
-                we can put our video here
+                we will put our video here
               </p>
               <div class="embed-responsive embed-responsive-16by9">
                 <iframe
@@ -286,71 +314,67 @@
             <h2 class="my-5 h3 text-center">Tutorial</h2>
           </div>
 
-          <!--First row-->
+<!--First row-->
+<div class="row features-small mb-5 mt-3 wow fadeIn">
+    <!--First column-->
+    <div >
+      <!--First row-->
+      <div class="row">
+        <div >
+          <i class="fas fa-check-circle fa-2x indigo-text"></i>
+        </div>
+        <div >
+          <h4 class="feature-title">
+              &nbsp;&nbsp;Signup with Email verification(Password is hashed)
+          </h4>
+         
+          <a href="https://gyazo.com/bacc3c54062382bce70316e7e7b37a95"><img src="https://i.gyazo.com/bacc3c54062382bce70316e7e7b37a95.gif" alt="Image from Gyazo" width="438"/></a>
+          <a href="https://gyazo.com/7a2dd042a88761d4848f69e4d57e176d"><img src="https://i.gyazo.com/7a2dd042a88761d4848f69e4d57e176d.png" alt="Image from Gyazo" width="469"/></a>
+          <a href="https://gyazo.com/30c47235c68a51d2b91ea4707c06f22d"><img src="https://i.gyazo.com/30c47235c68a51d2b91ea4707c06f22d.gif" alt="Image from Gyazo" width="434"/></a><br/>
+          
+        </div>
+        
+      </div>
+      <!--/First row-->
+
+          <!--Second row-->
           <div class="row features-small mb-5 mt-3 wow fadeIn">
             <!--First column-->
-            <div class="col-md-4">
+            <div >
               <!--First row-->
               <div class="row">
-                <div class="col-2">
+                <div >
                   <i class="fas fa-check-circle fa-2x indigo-text"></i>
                 </div>
-                <div class="col-10">
-                  <h6 class="feature-title">
-                    Step 1
-                  </h6>
-                  <p class="grey-text">
-                    step1
-                  </p>
-                  <div style="height:15px"></div>
-                </div>
-              </div>
-              <!--/First row-->
-
-              <!--Second row-->
-              <div class="row">
-                <div class="col-2">
-                  <i class="fas fa-check-circle fa-2x indigo-text"></i>
-                </div>
-                <div class="col-10">
-                  <h6 class="feature-title">Step 2</h6>
-                  <p class="grey-text">
-                    Step 2
-                  </p>
-                  <div style="height:15px"></div>
+                
+                <div >
+                   
+                  <h4 >&nbsp;&nbsp;Autocomplete search and add stock 
+                  </h4>
+                 
+                  <a href="https://gyazo.com/02fe9a335d4cb7272933c79855c17246"><img src="https://i.gyazo.com/02fe9a335d4cb7272933c79855c17246.gif" alt="Image from Gyazo" width="1000"/></a>
+                  
                 </div>
               </div>
               <!--/Second row-->
 
               <!--Third row-->
               <div class="row">
-                <div class="col-2">
+                <div >
                   <i class="fas fa-check-circle fa-2x indigo-text"></i>
                 </div>
-                <div class="col-10">
-                  <h6 class="feature-title">Step 3</h6>
-                  <p class="grey-text">
-                    Step 3
-                  </p>
-                  <div style="height:15px"></div>
+                <div >
+                  <h4 class="feature-title">&nbsp;&nbsp;Delete stock</h4>
+
+                  <a href="https://gyazo.com/731d8c3f63992eeb29a5e654a51a9dac"><img src="https://i.gyazo.com/731d8c3f63992eeb29a5e654a51a9dac.gif" alt="Image from Gyazo" width="1000"/></a>
+                  <div style="height:5px"></div>
                 </div>
               </div>
               <!--/Third row-->
 
-              <!--Fourth row-->
-              <div class="row">
-                <div class="col-2">
-                  <i class="fas fa-check-circle fa-2x indigo-text"></i>
-                </div>
-                <div class="col-10">
-                  <h6 class="feature-title">Step 4</h6>
-                  <p class="grey-text">
-                    Step 4
-                  </p>
-                  <div style="height:15px"></div>
-                </div>
-              </div>
-              <!--/Fourth row-->
+              
+
+              
             </div>
             
             </div>
@@ -406,13 +430,81 @@
     <script type="text/javascript" src="js/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="js/mdb.min.js"></script>
-    
     <!-- Initializations -->
     <script type="text/javascript">
       // Animations initialization
       new WOW().init();
     </script>
+    
+    <script>
+        function abc() {
+          var time = 60;
+    
+          var mytime = setInterval(function () {
+            subs();
+          },1000)
+     
+                    
+          function subs(){
+            time--;
+            document.getElementById("btr").textContent = time+"s";
+                   
+            if(time===0){
+              clearInterval(mytime);
+              document.getElementById("btr").textContent = "Send vcode";
+              document.getElementById("btr").disabled = false;
+            } else{
+              document.getElementById("btr").disabled = true;
+              }
+          }
+         }
+    
+        document.getElementById("btr").addEventListener("click",function(event){
+          document.getElementById("form3").required = false;
+          document.getElementById("form2").required = false;
+          document.getElementById("form1").required = false;
+          var frm = $('#zzz');
+          frm.submit(function (event) {
+            if (!$('form').hasClass('validated')){
+            abc();
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            $.ajax({
+                type: 'post',
+                url: '/svcode',
+                data: frm.serialize(),
+                async: false,
+                success: function (data) {
+                  if(data.success == 'false') {
+                    alert('Your username/password are incorrect');
+                    } 
+                  else {
+                    $('form').addClass('validated');
+                    }
+                },
+            });
+            return false;
+          }
+           });
+         });
+    
+        document.getElementById("btr1").addEventListener("onclick",function(event){
+          document.getElementById("form3").required = true;
+          document.getElementById("form2").required = true;
+          document.getElementById("form1").required = true;
+          
+          var myform = document.getElementById("zzz");
+          document.getElementById("zzz").action = "/signup";
+          myform.submit();
+        });
+    
+        </script>
+
+
   </body>
 </html>
