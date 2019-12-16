@@ -228,9 +228,9 @@ app.post("/svcode", function(request, response) {
 });
 
 function number() {
-  var number = "540";
-  // for (var i = 0; i < 3; ++i) {
-  //   number += Math.floor(Math.random() * 10);
-  // }
+  var number = "";
+  for (var i = 0; i < 3; ++i) {
+    number += Math.floor(Math.random() * 10);
+  }
   return number;
 }
