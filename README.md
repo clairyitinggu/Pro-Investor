@@ -4,7 +4,7 @@
 
 [yitingGu](https://github.com/clairyitinggu/Pro-Investor/blob/master/team/clairyitinggu.md)
 [MadelineFuentes](https://github.com/clairyitinggu/Pro-Investor/blob/master/team/MadelineFuentes.md)
-[SiqianZhou](https://github.com/clairyitinggu/Pro-Investor/blob/master/team/siqingzhou.md)
+[SiqingZhou](https://github.com/clairyitinggu/Pro-Investor/blob/master/team/siqingzhou.md)
 
 # Overview
 
